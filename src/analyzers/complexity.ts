@@ -28,9 +28,56 @@ function getFunctionName(node: TSESTree.Node): string {
     case "ArrowFunctionExpression":
     case "FunctionExpression": {
       const parent = (node as any).parent;
+
+      // const foo = () => {}
       if (parent?.type === "VariableDeclarator" && parent.id?.type === "Identifier") {
         return parent.id.name;
       }
+
+      // { key: () => {} } or { key() {} }
+      if (parent?.type === "Property" && parent.key?.type === "Identifier") {
+        return parent.key.name;
+      }
+
+      // obj.key = () => {}
+      if (parent?.type === "AssignmentExpression" && parent.left?.type === "MemberExpression") {
+        const prop = parent.left.property;
+        if (prop?.type === "Identifier") return prop.name;
+      }
+
+      // export default () => {}
+      if (parent?.type === "ExportDefaultDeclaration") {
+        return "(default export)";
+      }
+
+      // Callback: .map(() => {}), .filter(() => {}), etc.
+      if (parent?.type === "CallExpression") {
+        const callee = parent.callee;
+        if (callee?.type === "MemberExpression" && callee.property?.type === "Identifier") {
+          return `callback in .${callee.property.name}()`;
+        }
+        if (callee?.type === "Identifier") {
+          return `callback in ${callee.name}()`;
+        }
+        return "callback";
+      }
+
+      // Argument to a function: foo(() => {})
+      if (parent?.type === "ArrayExpression") {
+        const grandparent = parent.parent;
+        if (grandparent?.type === "CallExpression") {
+          const callee = grandparent.callee;
+          if (callee?.type === "MemberExpression" && callee.property?.type === "Identifier") {
+            return `callback in .${callee.property.name}()`;
+          }
+        }
+      }
+
+      // Return statement: return () => {}
+      if (parent?.type === "ReturnStatement") {
+        return "(returned function)";
+      }
+
       return "(anonymous)";
     }
     default:
