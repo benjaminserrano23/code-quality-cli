@@ -36,6 +36,9 @@ npx cq ./src --max-lines 300 --max-functions 10
 # Export JSON report
 npx cq ./src --json report.json
 
+# Generate HTML report
+npx cq ./src --html report.html
+
 # Scan specific extensions
 npx cq ./src --ext .ts,.tsx
 ```
