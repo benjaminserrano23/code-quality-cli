@@ -1,5 +1,7 @@
 # Code Quality CLI
 
+[![CI](https://github.com/benjaminserrano23/code-quality-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/benjaminserrano23/code-quality-cli/actions/workflows/ci.yml)
+
 CLI tool that analyzes code quality metrics for TypeScript and JavaScript projects. Built from scratch — no plugins, no configuration files, just AST-based analysis.
 
 ## Features
@@ -9,6 +11,8 @@ CLI tool that analyzes code quality metrics for TypeScript and JavaScript projec
 - **Circular dependency detection** — DFS-based cycle detection on the import graph
 - **Coupling analysis** — ranks files by how many other files import them
 - **JSON export** — machine-readable output for CI integration
+- **HTML report** — self-contained dark-themed report with summary and details
+- **.gitignore aware** — respects `.gitignore` patterns when scanning
 
 ## Installation
 
