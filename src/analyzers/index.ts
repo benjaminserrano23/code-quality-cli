@@ -81,5 +81,6 @@ export function analyze(options: AnalyzerOptions): AnalysisReport {
     circularDeps,
     mostCoupled,
     timestamp: new Date().toISOString(),
+    thresholds: { maxLines, maxFunctions },
   };
 }

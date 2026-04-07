@@ -29,6 +29,10 @@ export interface AnalysisReport {
   circularDeps: CircularDependency[];
   mostCoupled: FileMetric[];
   timestamp: string;
+  thresholds: {
+    maxLines: number;
+    maxFunctions: number;
+  };
 }
 
 export interface AnalyzerOptions {

@@ -45,8 +45,8 @@ export function printReport(report: AnalysisReport): void {
     console.log(chalk.bold.yellow(`⚠️  God Files (${godFiles.length})`));
     for (const f of godFiles) {
       const reasons: string[] = [];
-      if (f.lines > 500) reasons.push(`${f.lines} lines`);
-      if (f.functions > 15) reasons.push(`${f.functions} functions`);
+      if (f.lines > report.thresholds.maxLines) reasons.push(`${f.lines} lines`);
+      if (f.functions > report.thresholds.maxFunctions) reasons.push(`${f.functions} functions`);
       console.log(
         `   ${chalk.yellow(f.path)} ${chalk.gray(`— ${reasons.join(", ")}`)}`
       );
